@@ -1,6 +1,5 @@
 from pgzrun import *
 import random
-import time
 
 WIDTH = 1400
 HEIGHT = 800
