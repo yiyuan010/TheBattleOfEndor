@@ -32,7 +32,7 @@ def dead():
     deadInvoked = True
 
 def recovery():
-    global failed,k,current_life, max_life,deadInvoked
+    global failed,kill,current_life, max_life,deadInvoked
     TIE.image = "xt.png"
     failed = False
     kill = 0
