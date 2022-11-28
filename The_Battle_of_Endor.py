@@ -8,7 +8,7 @@ shot = []
 shot2 = []
 current_life = 10
 max_life = 10
-k = 0
+kill = 0
 
 bg = Actor("ds.png")
 TIE = Actor("xt.png")
@@ -35,7 +35,7 @@ def recovery():
     global failed,k,current_life, max_life,deadInvoked
     TIE.image = "xt.png"
     failed = False
-    k = 0
+    kill = 0
     current_life = max_life
     deadInvoked = False
     sounds.imperialmarch.play()
@@ -43,7 +43,7 @@ def recovery():
 def draw():
     global failed
     global current_life,max_life
-    global k
+    global kill
     global n
     screen.clear()
     bg.draw()
@@ -56,14 +56,14 @@ def draw():
         #sounds.laser.play()
     for i in shot2:
         i.draw()
-    screen.draw.text(f"life:{current_life}/{max_life}  score:{k}", (60, 10), color="white", fontsize=40)
+    screen.draw.text(f"life:{current_life}/{max_life}  score:{kill}", (60, 10), color="white", fontsize=40)
     if failed:
         dead()
         #failed = False
 
 def update():
     global failed
-    global k
+    global kill
     global current_life
     global n
     screen.clear()
@@ -91,7 +91,7 @@ def update():
             sounds.explosion.play()
             X_wing.x = 1400
             X_wing.y = random.randint(100, 720)
-            k += 1
+            kill += 1
     for j in shot2:
         j.x -= 20
         if j.x < 0:
@@ -105,7 +105,7 @@ def update():
         #dead()
         #l = 1
 
-def X_xing_shot():
+def X_wing_shot():
     s2 = Actor("red.png")
     s2.pos = X_wing.pos
     shot2.append(s2)
@@ -123,6 +123,6 @@ def on_mouse_move(pos):
     elif TIE.y > 780:
         TIE.y = 780
 
-clock.schedule_interval(X_xing_shot, 0.2)
+clock.schedule_interval(X_wing_shot, 0.2)
 sounds.imperialmarch.play()
 go()
