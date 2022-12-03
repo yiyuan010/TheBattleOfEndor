@@ -15,16 +15,18 @@ TIE = Actor("xt.png")
 X_wing = Actor("tx.png")
 DV = Actor("dv.png")
 AS = Actor("as.png")
+V = Actor("ppt.png")
 AS.x = 1400
 AS.y = random.randint(100,700)
 failed = False
 deadInvoked = False
+sucess = 0
 
 def dead():
     global current_life,deadInvoked
     if deadInvoked:
         return
-#    screen.draw.text("Lord Vader,your star fighter was destroyed,do you want to start over?", (0, 400), color="white",fontsize=50)
+    screen.draw.text("Lord Vader,your star fighter was destroyed,do you want to start over?", (0, 400), color="white",fontsize=50)
     TIE.image = "boom.png"
     sounds.explosion.play()
     sounds.imperialmarch.stop()
@@ -41,7 +43,7 @@ def recovery():
     sounds.imperialmarch.play()
 
 def draw():
-    global failed
+    global failed,sucess
     global current_life,max_life
     global kill
     global n
@@ -56,19 +58,28 @@ def draw():
         #sounds.laser.play()
     for i in shot2:
         i.draw()
-    screen.draw.text(f"life:{current_life}/{max_life}  score:{kill}", (60, 10), color="white", fontsize=40)
+    screen.draw.text(f"life:{current_life}/{max_life}  score:{kill}/12", (60, 10), color="white", fontsize=40)
     if failed:
         dead()
         #failed = False
+    if sucess:
+        V.draw()
+
 
 def update():
-    global failed
+    global failed,sucess
     global kill
     global current_life
     global n
-    screen.clear()
+    if sucess:
+        return
     if failed:
         return
+    screen.clear()
+    if kill == 12:
+        sucess = 1
+        sounds.imperialmarch.stop()
+
     #bg.x -= 10
     AS.x -= 10
     if AS.x < 0:
@@ -99,7 +110,7 @@ def update():
         elif j.colliderect(TIE):
             #TIE.image = "bird.png"
             shot2.remove(j)
-            current_life -= 1
+            current_life -= 5
     if current_life <= 0:
         failed = True
         #dead()
